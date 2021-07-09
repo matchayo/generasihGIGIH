@@ -22,11 +22,4 @@ class Hero < Person
     end
   end
 
-  # def random_attack(enemies)
-  #   super(enemies)
-  #   if enemy.flee?
-  #     puts enemy.die
-  #     enemies.delete(enemy)
-  #   end
-  # end
 end

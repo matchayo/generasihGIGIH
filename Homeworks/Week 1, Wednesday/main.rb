@@ -81,7 +81,6 @@ until !jin.alive
   end
 
   break if villains.empty?
-  break if heroes.empty?
 
   # Villains attack randomly
   for i in 0..villains.length() - 1 do
