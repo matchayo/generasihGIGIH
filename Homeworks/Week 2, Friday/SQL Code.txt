@@ -1,0 +1,66 @@
+-- Create CUSTOMERS table
+CREATE TABLE customers (
+id INT NOT NULL AUTO_INCREMENT,
+name VARCHAR(50),
+phone VARCHAR(14),
+PRIMARY KEY (id)
+);
+
+-- Create ORDERS table
+CREATE TABLE orders (
+id INT NOT NULL AUTO_INCREMENT,
+customer_id INT NOT NULL,
+total_price INT NOT NULL,
+date_time DATETIME NOT NULL,
+
+PRIMARY KEY (id),
+FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+-- Create ORDER_DETAILS table
+CREATE TABLE order_details (
+order_id INT NOT NULL,
+item_id INT NOT NULL,
+qty INT NOT NULL,
+
+FOREIGN KEY (order_id) REFERENCES orders(id),
+FOREIGN KEY (item_id) REFERENCES items(id)
+);
+
+-- Dummy records for CUSTOMERS
+INSERT INTO customers (name, phone) VALUES ('Gabriel', '+6211021030012');
+INSERT INTO customers (name, phone) VALUES ('John', '+6212131939909');
+INSERT INTO customers (name, phone) VALUES ('Sally', '+6231231124192');
+INSERT INTO customers (name, phone) VALUES ('Ariel', '+6251425770176');
+INSERT INTO customers (name, phone) VALUES ('Zack', '+6211221723599');
+
+-- Dummy records for ORDERS
+INSERT INTO orders (customer_id, total_price, date_time) VALUES (1, 94000, '2021-03-12 14:51:12');
+INSERT INTO orders (customer_id, total_price, date_time) VALUES (2, 42000, '2021-03-25 19:11:45');
+INSERT INTO orders (customer_id, total_price, date_time) VALUES (3, 20000, '2021-04-01 11:47:59');
+INSERT INTO orders (customer_id, total_price, date_time) VALUES (4, 18000, '2021-04-29 17:21:36');
+INSERT INTO orders (customer_id, total_price, date_time) VALUES (5, 13000, '2021-05-17 09:35:27');
+
+-- Dummy records for ORDER_DETAILS
+INSERT INTO order_details (order_id, item_id, qty) VALUES (1, 1, 1);
+INSERT INTO order_details (order_id, item_id, qty) VALUES (1, 7, 1);
+INSERT INTO order_details (order_id, item_id, qty) VALUES (1, 4, 1);
+INSERT INTO order_details (order_id, item_id, qty) VALUES (1, 5, 1);
+
+INSERT INTO order_details (order_id, item_id, qty) VALUES (2, 3, 1);
+INSERT INTO order_details (order_id, item_id, qty) VALUES (2, 2, 1);
+
+INSERT INTO order_details (order_id, item_id, qty) VALUES (3, 8, 1);
+
+INSERT INTO order_details (order_id, item_id, qty) VALUES (4, 4, 1);
+
+INSERT INTO order_details (order_id, item_id, qty) VALUES (5, 6, 1);
+
+-- Select
+SELECT orders.id AS 'Order ID', orders.date_time AS 'Order Date and Time', customers.name AS 'Customer Name', 
+customers.phone AS 'Customer Phone', orders.total_price AS 'Total', GROUP_CONCAT(items.name) AS 'Items bought'
+FROM customers
+RIGHT JOIN orders ON customers.id = orders.customer_id
+LEFT JOIN order_details ON orders.id = order_details.order_id
+LEFT JOIN items ON order_details.item_id = items.id
+GROUP BY customers.id;
