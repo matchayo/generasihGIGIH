@@ -1,8 +1,8 @@
 -- Create CUSTOMERS table
 CREATE TABLE customers (
 id INT NOT NULL AUTO_INCREMENT,
-name VARCHAR(50),
-phone VARCHAR(14),
+name VARCHAR(50) NOT NULL,
+phone VARCHAR(14) NOT NULL,
 PRIMARY KEY (id)
 );
 
