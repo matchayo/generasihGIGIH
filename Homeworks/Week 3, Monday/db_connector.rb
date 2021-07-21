@@ -14,7 +14,6 @@ def create_db_client
     client
 end
 
-#Example
 def get_all_items
     client = create_db_client
     rawData = client.query("SELECT * FROM items")
@@ -27,6 +26,20 @@ def get_all_items
     end
 
     items
+end
+
+def get_all_categories
+    client = create_db_client
+    rawData = client.query("SELECT * FROM categories")
+
+    categories = Array.new
+
+    rawData.each do | data |
+        category = Category.new(data["id"], data["name"])
+        categories.push(category)
+    end
+
+    categories
 end
 
 def create_new_item(name, price, category_name = nil)
@@ -94,5 +107,3 @@ def edit_item_with_id(id, name, price, category_name)
         client.query("INSERT INTO item_categories(item_id, category_id) VALUES(#{id}, #{category_id})")
     end
 end
-
-items = get_all_items

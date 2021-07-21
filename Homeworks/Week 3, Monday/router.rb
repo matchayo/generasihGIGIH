@@ -3,21 +3,28 @@ require './db_connector'
 
 get '/' do
     items = get_all_items
+
     erb :index, locals: {
         items: items
     }
 end
 
 get '/items/new' do
-    erb :create_item
+    categories = get_all_categories
+
+    erb :create_item, locals: {
+      categories: categories
+    }
 end
 
 get '/items/edit/:id' do
     id = params['id']
     item = get_item_with_id(id)
+    categories = get_all_categories
 
     erb :edit_item, locals: {
-      item: item
+      item: item,
+      categories: categories
     }
 end
 

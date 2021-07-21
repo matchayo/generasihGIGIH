@@ -4,11 +4,19 @@
 <form method="POST" action="/items/edit/<%= item.id %>">
   <input name="name" type="text" value="<%= item.name %>">
   <input name="price" type="text" value="<%= item.price %>">
-  <select name="category_name" value="<%= item.category.name %>">
-    <option>Main Dish</option>
-    <option>Dessert</option>
-    <option>Beverage</option>>
-    <option>None</option>
+  <select name="category_name">Choose category
+    <% if item.category %>
+      <option>None</option>
+    <% else %>
+      <option selected>None</option>
+    <% end %>
+    <% categories.each do |category| %>
+      <% if item.category && category.name == item.category.name %>
+        <option selected><%= category.name %></option>
+      <% else %>
+        <option><%= category.name %></option>
+      <% end %>
+    <% end %>
   </select>
   <button type="submit">Submit</button>
 </form>
